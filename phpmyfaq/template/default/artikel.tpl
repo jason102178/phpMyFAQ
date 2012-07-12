@@ -57,11 +57,27 @@
                         <input type="hidden" name="artikel" value="{saveVotingID}" />
                         <div id="votings"></div>
                         <div id="votingstars">
+                            <input class="voting" type="radio" name="vote" value="-10" />
+                            <input class="voting" type="radio" name="vote" value="-9" />
+                            <input class="voting" type="radio" name="vote" value="-8" />
+                            <input class="voting" type="radio" name="vote" value="-7" />
+                            <input class="voting" type="radio" name="vote" value="-6" />
+                            <input class="voting" type="radio" name="vote" value="-5" />
+                            <input class="voting" type="radio" name="vote" value="-4" />
+                            <input class="voting" type="radio" name="vote" value="-3" />
+                            <input class="voting" type="radio" name="vote" value="-2" />
+                            <input class="voting" type="radio" name="vote" value="-1" />
+                            <input class="voting" type="radio" name="vote" value="0" />
                             <input class="voting" type="radio" name="vote" value="1" />
                             <input class="voting" type="radio" name="vote" value="2" />
                             <input class="voting" type="radio" name="vote" value="3" />
                             <input class="voting" type="radio" name="vote" value="4" />
                             <input class="voting" type="radio" name="vote" value="5" />
+                            <input class="voting" type="radio" name="vote" value="6" />
+                            <input class="voting" type="radio" name="vote" value="7" />
+                            <input class="voting" type="radio" name="vote" value="8" />
+                            <input class="voting" type="radio" name="vote" value="9" />
+                            <input class="voting" type="radio" name="vote" value="10" />
                             <span><strong>{msgAverageVote}</strong><span id="rating">{printVotings}</span></span>
                         </div>
                     </fieldset>

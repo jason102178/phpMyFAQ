@@ -1736,6 +1736,11 @@ class PMF_Faq
                 $this->user);
         }
 
+        if (defined('PMF_VOTING_MODE') && PMF_VOTING_MODE == 'advanced') {
+            $votingTableName = 'faqvoting_adv';
+        } else {
+            $votingTableName = 'faqvoting';
+        }
         $now = date('YmdHis');
         $query =
 '            SELECT
@@ -1747,7 +1752,7 @@ class PMF_Faq
                 (fv.vote/fv.usr) AS avg,
                 fv.usr AS user
             FROM
-                '.SQLPREFIX.'faqvoting fv,
+                '.SQLPREFIX.$votingTableName.' fv,
                 '.SQLPREFIX.'faqdata fd
             LEFT JOIN
                 '.SQLPREFIX.'faqcategoryrelations fcr
@@ -2039,14 +2044,22 @@ class PMF_Faq
     public function votingCheck($id, $ip)
     {
         $check = $_SERVER['REQUEST_TIME'] - 300;
+
+        if (defined('PMF_VOTING_MODE') && PMF_VOTING_MODE == 'advanced') {
+            $votingTableName = 'faqvoting_adv';
+        } else {
+            $votingTableName = 'faqvoting';
+        }
+
         $query = sprintf(
             "SELECT
                 id
             FROM
-                %sfaqvoting
+                %s%s
             WHERE
                 artikel = %d AND (ip = '%s' AND datum > '%s')",
             SQLPREFIX,
+            $votingTableName,
             $id,
             $ip,
             $check);
@@ -2056,8 +2069,22 @@ class PMF_Faq
         return true;
     }
 
+    public function votingRulesCheck($vote)
+    {
+        if (defined('PMF_VOTING_MODE') && PMF_VOTING_MODE == 'advanced') {
+            if ($vote > -11 && $vote < 11) {
+                return true;
+            }
+        } else {
+            if ($vote > 0 && $vote < 6) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
-     * Returns the number of users from the table faqvotings
+     * Returns the number of users from the table faqvoting/faqvoting_adv
      *
      * @param   integer $record_id
      * @return  integer
@@ -2067,14 +2094,21 @@ class PMF_Faq
      */
     function getNumberOfVotings($record_id)
     {
+        if (defined('PMF_VOTING_MODE') && PMF_VOTING_MODE == 'advanced') {
+            $votingTableName = 'faqvoting_adv';
+        } else {
+            $votingTableName = 'faqvoting';
+        }
+
         $query = sprintf(
             'SELECT
                 usr
             FROM
-                %sfaqvoting
+                %s%s
             WHERE
                 artikel = %d',
             SQLPREFIX,
+            $votingTableName,
             $record_id);
         if ($result = $this->db->query($query)) {
             if ($row = $this->db->fetch_object($result)) {
@@ -2099,13 +2133,20 @@ class PMF_Faq
             return false;
         }
 
+        if (defined('PMF_VOTING_MODE') && PMF_VOTING_MODE == 'advanced') {
+            $votingTableName = 'faqvoting_adv';
+        } else {
+            $votingTableName = 'faqvoting';
+        }
+
         $query = sprintf(
             "INSERT INTO
-                %sfaqvoting
+                %s%s
             VALUES
                 (%d, %d, %d, 1, %d, '%s')",
             SQLPREFIX,
-            $this->db->nextID(SQLPREFIX.'faqvoting', 'id'),
+            $votingTableName,
+            $this->db->nextID(SQLPREFIX.$votingTableName, 'id'),
             $votingData['record_id'],
             $votingData['vote'],
             $_SERVER['REQUEST_TIME'],
@@ -2246,9 +2287,15 @@ class PMF_Faq
             return false;
         }
 
+        if (defined('PMF_VOTING_MODE') && PMF_VOTING_MODE == 'advanced') {
+            $votingTableName = 'faqvoting_adv';
+        } else {
+            $votingTableName = 'faqvoting';
+        }
+
         $query = sprintf(
             "UPDATE
-                %sfaqvoting
+                %s%s
             SET
                 vote    = vote + %d,
                 usr     = usr + 1,
@@ -2257,6 +2304,7 @@ class PMF_Faq
             WHERE
                 artikel = %d",
             SQLPREFIX,
+            $votingTableName,
             $votingData['vote'],
             $_SERVER['REQUEST_TIME'],
             $votingData['user_ip'],

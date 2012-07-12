@@ -560,7 +560,7 @@ switch ($action) {
         $vote     = PMF_Filter::filterInput(INPUT_POST, 'vote', FILTER_VALIDATE_INT);
         $userIp   = PMF_Filter::filterVar($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP);
 
-        if (isset($vote) && $faq->votingCheck($recordId, $userIp) && $vote > 0 && $vote < 6) {
+        if (isset($vote) && $faq->votingCheck($recordId, $userIp) && $faq->votingRulesCheck($vote)) {
             $faqsession->userTracking('save_voting', $recordId);
 
             $votingData = array(

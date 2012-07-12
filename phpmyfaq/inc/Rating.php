@@ -104,6 +104,12 @@ class PMF_Rating
     {
         $ratings = array();
 
+        if (defined('PMF_VOTING_MODE') && PMF_VOTING_MODE == 'advanced') {
+            $votingTableName = 'faqvoting_adv';
+        } else {
+            $votingTableName = 'faqvoting';
+        }
+
         switch($this->type) {
             case 'mssql':
             // In order to remove this MS SQL 2000/2005 "limit" below:
@@ -120,7 +126,7 @@ class PMF_Rating
                         (fv.vote / fv.usr) AS num,
                         fv.usr AS usr
                     FROM
-                        %sfaqvoting fv,
+                        %s%s fv,
                         %sfaqdata fd
                     LEFT JOIN
                         %sfaqcategoryrelations fcr
@@ -141,6 +147,7 @@ class PMF_Rating
                     ORDER BY
                         fcr.category_id",
                     SQLPREFIX,
+                    $votingTableName,
                     SQLPREFIX,
                     SQLPREFIX);
                 break;
@@ -155,7 +162,7 @@ class PMF_Rating
                         (fv.vote / fv.usr) AS num,
                         fv.usr AS usr
                     FROM
-                        %sfaqvoting fv,
+                        %s%s fv,
                         %sfaqdata fd
                     LEFT JOIN
                         %sfaqcategoryrelations fcr
@@ -176,6 +183,7 @@ class PMF_Rating
                     ORDER BY
                         fcr.category_id",
                     SQLPREFIX,
+                    $votingTableName,
                     SQLPREFIX,
                     SQLPREFIX);
                 break;
@@ -206,14 +214,20 @@ class PMF_Rating
      */
     function getVotingResult($id)
     {
+        if (defined('PMF_VOTING_MODE') && PMF_VOTING_MODE == 'advanced') {
+            $votingTableName = 'faqvoting_adv';
+        } else {
+            $votingTableName = 'faqvoting';
+        }
         $query = sprintf(
             'SELECT
                 (vote/usr) as voting, usr
             FROM
-                %sfaqvoting
+                %s%s
             WHERE
                 artikel = %d',
             SQLPREFIX,
+            $votingTableName,
             $id);
        $result = $this->db->query($query);
        if ($this->db->num_rows($result) > 0) {
