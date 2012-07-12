@@ -1,7 +1,7 @@
 <?php
 /**
  * Shows the page with the FAQ record and - when available - the user comments
- * 
+ *
  * PHP Version 5.2
  *
  * The contents of this file are subject to the Mozilla Public License
@@ -108,7 +108,7 @@ if (!is_null($highlight) && $highlight != "/" && $highlight != "<" && $highlight
 // Search for href attribute links
 $oLnk->resetPool();
 $oLnk->parse_string($answer);
-$fixedContent = str_replace('href="#', 
+$fixedContent = str_replace('href="#',
     sprintf('href="index.php?action=artikel&amp;lang=%s&amp;cat=%d&amp;id=%d&amp;artlang=%s#',
         $LANGCODE,
         $currentCategory,
@@ -116,7 +116,7 @@ $fixedContent = str_replace('href="#',
         $LANGCODE),
     $answer);
 $oLnk->resetPool();
-$oLnk->parse_string($fixedContent); 
+$oLnk->parse_string($fixedContent);
 
 // Search for href attributes only
 $linkArray = $oLnk->getUrlpool();
@@ -141,7 +141,7 @@ if (isset($linkArray['href'])) {
     }
 }
 
-$answer = $fixedContent; 
+$answer = $fixedContent;
 
 // Check for the languages for a faq
 $arrLanguage    = PMF_Utils::languageAvailable($faq->faqRecord['id']);
@@ -164,10 +164,10 @@ if (count($arrLanguage) > 1) {
 
 // List all faq attachments
 if ($faqconfig->get('records.disableAttachments') && 'yes' == $faq->faqRecord['active']) {
-    
+
     $attList = PMF_Attachment_Factory::fetchByRecordId($faq->faqRecord['id']);
     $outstr  = '';
-    
+
     while (list(,$att) = each($attList)) {
         $outstr .= sprintf('<a href="%s">%s</a>, ',
             $att->buildUrl(),

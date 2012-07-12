@@ -13,7 +13,7 @@
  * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
  * License for the specific language governing rights and limitations
  * under the License.
- * 
+ *
  * @category  phpMyFAQ
  * @package   PMF_Faq
  * @author    Thorsten Rinne <thorsten@phpmyfaq.de>
@@ -162,7 +162,7 @@ class PMF_Faq
         } else {
             $this->groups = $groups;
         }
-        
+
         $faqconfig = PMF_Configuration::getInstance();
         if ($faqconfig->get('security.permLevel') == 'medium') {
             $this->groupSupport = true;
@@ -438,10 +438,10 @@ class PMF_Faq
                             $row->category_id,
                             $row->id,
                             $row->lang);
-                            
+
                 $oLink = new PMF_Link(PMF_Link::getSystemRelativeUri().'?'.$url);
                 $oLink->itemTitle = $oLink->text = $oLink->tooltip = $title;
-                
+
                 $listItem = sprintf('<li>%s<span id="viewsPerRecord"><br /><span class="little">(%s)</span>%s</span></li>',
                     $oLink->toHtmlAnchor(),
                     $this->plr->GetMsg('plmsgViews', $visits),
@@ -469,11 +469,11 @@ class PMF_Faq
                              'nextPageLinkTpl' => '<a href="{LINK_URL}">' . $this->pmf_lang['msgNext'] . '</a>',
                              'prevPageLinkTpl' => '<a href="{LINK_URL}">' . $this->pmf_lang['msgPrevious'] . '</a>',
                              'layoutTpl'       => '<p align="center"><strong>{LAYOUT_CONTENT}</strong></p>');
-        
+
             $pagination = new PMF_Pagination($options);
             $output    .= $pagination->render();
         }
-        
+
         return $output;
     }
 
@@ -492,7 +492,7 @@ class PMF_Faq
         $faqconfig  = PMF_Configuration::getInstance();
         $records    = implode(', ', $record_ids);
         $page       = PMF_Filter::filterInput(INPUT_GET, 'seite', FILTER_VALIDATE_INT, 1);
-        $tagging_id = PMF_Filter::filterInput(INPUT_GET, 'tagging_id', FILTER_VALIDATE_INT); 
+        $tagging_id = PMF_Filter::filterInput(INPUT_GET, 'tagging_id', FILTER_VALIDATE_INT);
         $output     = '';
 
         if ($this->groupSupport) {
@@ -639,7 +639,7 @@ class PMF_Faq
                 $oLink->itemTitle = 'tag';
                 $oLink->text      = $this->pmf_lang["msgPrevious"];
                 $oLink->tooltip   = $this->pmf_lang["msgPrevious"];
-                $output          .= '[ '.$oLink->toHtmlAnchor().' ]'; 
+                $output          .= '[ '.$oLink->toHtmlAnchor().' ]';
             }
             $output .= " ";
             if ($next <= $pages) {
@@ -679,11 +679,11 @@ class PMF_Faq
             $permPart = sprintf("( fdu.user_id = %d OR fdu.user_id = -1 )",
                 $this->user);
         }
-        
+
         $query = sprintf(
             "SELECT
-                 id, lang, solution_id, revision_id, active, sticky, keywords, 
-                 thema, content, author, email, comment, datum, links_state, 
+                 id, lang, solution_id, revision_id, active, sticky, keywords,
+                 thema, content, author, email, comment, datum, links_state,
                  links_check_date, date_start, date_end
             FROM
                 %s%s fd
@@ -872,7 +872,7 @@ class PMF_Faq
      *
      * @param integer $record_id   Record id
      * @param string  $record_lang Record language
-     * 
+     *
      * @return boolean
      */
     public function deleteRecord($record_id, $record_lang)
@@ -938,10 +938,10 @@ class PMF_Faq
 
         return false;
     }
-    
+
     /**
      * Checks, if comments are disabled for the FAQ record
-     * 
+     *
      * @param  integer $record_id   Id of FAQ or news entry
      * @param  string  $record_lang Language
      * @param  string  $record_type Type of comment: faq or news
@@ -954,7 +954,7 @@ class PMF_Faq
         } else {
             $table = 'faqdata';
         }
-        
+
         $query = sprintf("
             SELECT
                 comment
@@ -970,7 +970,7 @@ class PMF_Faq
             $record_lang);
 
         $result = $this->db->query($query);
-        
+
         if ($row = $this->db->fetch_object($result)) {
             return ($row->comment === 'y') ? false : true;
         } else {
@@ -1070,7 +1070,7 @@ class PMF_Faq
             $permPart = sprintf("( fdu.user_id = %d OR fdu.user_id = -1 )",
                 $this->user);
         }
-        
+
         $query = sprintf(
             "SELECT
                 *
@@ -1225,7 +1225,7 @@ class PMF_Faq
 
         $orderBy = '';
         switch ($sortType) {
-        	
+
             case FAQ_SORTING_TYPE_CATID_FAQID:
                 $orderBy = sprintf("
             ORDER BY
@@ -1240,7 +1240,7 @@ class PMF_Faq
                 fd.id %s",
                     $sortOrder);
                 break;
-                
+
             case FAQ_SORTING_TYPE_FAQTITLE_FAQID:
                 $orderBy = sprintf("
             ORDER BY
@@ -1463,31 +1463,31 @@ class PMF_Faq
             return '';
         }
     }
-    
+
     /**
      * Returns a answer preview of the FAQ record
      *
      * @param integer $recordId  FAQ record ID
      * @param integer $wordCount Number of words, default: 12
-     * 
-     * @return string 
+     *
+     * @return string
      */
     public function getRecordPreview($recordId, $wordCount = 12)
     {
     	$answerPreview = '';
-    	
+
         if (isset($this->faqRecord['id']) && ($this->faqRecord['id'] == $recordId)) {
             $answerPreview = $this->faqRecord['content'];
         }
-        
+
         $query = sprintf("
             SELECT
                 content as answer
             FROM
                 %sfaqdata
-            WHERE 
-                id = %d 
-            AND 
+            WHERE
+                id = %d
+            AND
                 lang = '%s'",
             SQLPREFIX,
             $recordId,
@@ -1501,7 +1501,7 @@ class PMF_Faq
         } else {
             $answerPreview = PMF_Configuration::getInstance()->get('main.metaDescription');
         }
-    	
+
     	return PMF_Utils::makeShorterText($answerPreview, $wordCount);
     }
 
@@ -1541,7 +1541,7 @@ class PMF_Faq
             return 0;
         }
     }
-    
+
     /**
      * Adds a comment
      *
@@ -1575,7 +1575,7 @@ class PMF_Faq
 
     /**
      * This function generates a list with the mosted voted or most visited records
-     * 
+     *
      * @param  string $type Type definition visits/voted
      * @access public
      * @since  2009-11-03
@@ -1622,7 +1622,7 @@ class PMF_Faq
     {
         $result = $this->getLatestData(PMF_NUMBER_RECORDS_LATEST, $this->language);
         $output = array();
-        
+
         if (count ($result) > 0) {
             foreach ($result as $row) {
                 $output['url'][]   =  $row['url'];
@@ -1707,14 +1707,14 @@ class PMF_Faq
             SQLPREFIX,
             $is_visible,
             $question_id);
-        
+
         $this->db->query($query);
         return true;
     }
 
     /**
      * This function generates a data-set with the mosted voted recors
-     *  
+     *
      * @param  integer $count      Number of records
      * @param  integer $categoryId Category ID
      * @param  string  $language   Language
@@ -1723,7 +1723,7 @@ class PMF_Faq
     public function getTopVotedData($count = PMF_NUMBER_RECORDS_TOPTEN, $category = 0, $language = nuLL)
     {
         global $sids;
-                    
+
         if ($this->groupSupport) {
             $permPart = sprintf("( fdg.group_id IN (%s)
             OR
@@ -1823,7 +1823,7 @@ class PMF_Faq
 
         return $topten;
     }
-     
+
     /**
      * This function generates the Top Ten data with the mosted viewed records
      *
@@ -2252,7 +2252,7 @@ class PMF_Faq
             FROM
                 %sfaqquestions
             %s
-            ORDER BY 
+            ORDER BY
                 created ASC",
             SQLPREFIX,
             ($all == false ? "WHERE is_visible = 'Y'" : ''));
@@ -2405,7 +2405,7 @@ class PMF_Faq
      * @param string  $bDownwards
      * @param string  $lang
      * @param string  $date
-     * 
+     *
      * @return  array
      */
     function get($QueryType = FAQ_QUERY_TYPE_DEFAULT, $nCatid = 0, $bDownwards = true, $lang = '', $date = '')
@@ -2769,17 +2769,17 @@ class PMF_Faq
                         $row->category_id,
                         $row->id,
                         $row->lang);
-                        
+
             $oLink            = new PMF_Link(PMF_Link::getSystemRelativeUri().'?'.$url);
             $oLink->itemTitle = $row->thema;
             $oLink->text      = $title;
             $oLink->tooltip   = $title;
             $listItem         = sprintf('<li>%s</li>', $oLink->toHtmlAnchor(), $this->pmf_lang['msgViews']);
             $listItem         = '<li>'.$oLink->toHtmlAnchor().'</li>';
-            
+
             $output .= $listItem;
         }
-        
+
         $output .= '</ul>';
 
         return $output;
@@ -2856,10 +2856,10 @@ class PMF_Faq
 
         return $output.$extraout;
     }
-    
+
     /**
      * Setter for the language
-     * 
+     *
      * @param  string $language Language
      * @return void
      */
@@ -2867,30 +2867,30 @@ class PMF_Faq
     {
     	$this->language = $language;
     }
-    
+
     /**
-     * Set or unset a faq item flag 
+     * Set or unset a faq item flag
      *
      * @param integer $id   Record id
      * @param string  $lang language code which is valid with PMF_Language::isASupportedLanguage
      * @param boolean $flag weither or not the record is set to sticky
      * @param string  $type type of the flag to set, use the column name
-     * 
+     *
      * @return boolean
      */
     public function updateRecordFlag($id, $lang, $flag, $type)
     {
         $retval = false;
-        
+
         switch ($type) {
             case 'sticky':
                 $flag = ($flag === 'checked' ? 1 : 0);
                 break;
-                
+
             case 'active':
                 $flag = ($flag === 'checked' ? "'yes'" : "'no'");
                 break;
-                
+
             default:
                 // This is because we would run into unknown db column
                 $flag = null;
@@ -2898,38 +2898,38 @@ class PMF_Faq
         }
 
         if (null !== $flag) {
-        
+
             $update = sprintf("
-                UPDATE 
-                    %sfaqdata 
-                SET 
-                    %s = %s 
-                WHERE 
-                    id = %d 
-                AND 
+                UPDATE
+                    %sfaqdata
+                SET
+                    %s = %s
+                WHERE
+                    id = %d
+                AND
                     lang = '%s'",
                 SQLPREFIX,
                 $type,
-                $flag, 
-                $id, 
+                $flag,
+                $id,
                 $lang);
-        
+
             $retval = (bool)$this->db->query($update);
-        
+
         }
-        
+
         return $retval;
     }
-    
+
     /**
      * Returns the sticky records with URL and Title
-     * 
+     *
      * @return array
      */
     private function getStickyRecordsData()
     {
         global $sids;
-        
+
         if ($this->groupSupport) {
             $permPart = sprintf("AND
                 ( fdg.group_id IN (%s)
@@ -2943,8 +2943,8 @@ class PMF_Faq
                 ( fdu.user_id = %d OR fdu.user_id = -1 )",
                 $this->user);
         }
-        
-        
+
+
         $now = date('YmdHis');
         $query = sprintf("
             SELECT
@@ -2970,13 +2970,13 @@ class PMF_Faq
                 fd.id = fdu.record_id
             WHERE
                 fd.lang = '%s'
-            AND 
+            AND
                 fd.date_start <= '%s'
-            AND 
+            AND
                 fd.date_end   >= '%s'
-            AND 
+            AND
                 fd.active = 'yes'
-            AND 
+            AND
                 fd.sticky = 1
             %s",
             SQLPREFIX,
@@ -3015,10 +3015,10 @@ class PMF_Faq
 
         return $sticky;
     }
-    
+
     /**
      * Prepares and returns the sticky records for the frontend
-     * 
+     *
      * @return array
      */
     public function getStickyRecords()

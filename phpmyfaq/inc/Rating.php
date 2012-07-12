@@ -1,7 +1,7 @@
 <?php
 /**
  * The main Rating class
- * 
+ *
  * PHP Version 5.2
  *
  * The contents of this file are subject to the Mozilla Public License
@@ -29,7 +29,7 @@ if (!defined('IS_VALID_PHPMYFAQ')) {
 
 /**
  * PMF_Rating
- * 
+ *
  * @category  phpMyFAQ
  * @package   PMF_Rating
  * @author    Thorsten Rinne <thorsten@phpmyfaq.de>
