@@ -223,6 +223,7 @@ $allowedVariables = array(
     'savecomment'     => 1,
     'savequestion'    => 1,
     'savevoting'      => 1,
+    'score'           => 1,
     'search'          => 1,
     'send2friend'     => 1,
     'sendmail'        => 1,

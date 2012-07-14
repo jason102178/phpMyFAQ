@@ -251,4 +251,38 @@ class PMF_Rating
             return '0 ('.$this->plr->GetMsg('plmsgVotes',0).')';
        }
     }
+
+    public function getScoreboard()
+    {
+        $query = sprintf(
+            'SELECT
+                sum(fv.vote) as score,
+                fv.author_id,
+                fud.display_name as name
+            FROM
+                %sfaqvoting_adv fv,
+                %sfaquserdata fud
+            WHERE
+                fv.author_id > 0
+            AND
+                fv.author_id = fud.user_id
+            GROUP BY
+                fv.author_id
+            ORDER BY
+                score DESC',
+            SQLPREFIX,
+            SQLPREFIX
+        );
+        $all = array();
+        $result = $this->db->query($query);
+        if ($this->db->num_rows($result) > 0) {
+            while ($row = $this->db->fetch_object($result)) {
+                $all[$row->author_id] = array(
+                    'score' => $row->score,
+                    'name'  => $row->name,
+                );
+            }
+        }
+        return $all;
+    }
 }
