@@ -10,7 +10,7 @@
  * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
  * License for the specific language governing rights and limitations
  * under the License.
- * 
+ *
  * @category  phpMyFAQ
  * @package   JavaScript
  * @author    Thorsten Rinne <thorsten@phpmyfaq.de>
@@ -25,7 +25,7 @@
  */
 
 /**
- * 
+ *
  * @param pic
  * @param title
  * @param width
@@ -38,7 +38,7 @@ function addAttachment(pic,title,width,height)
 }
 
 /**
- * 
+ *
  * @param checkBox
  */
 function checkAll(checkBox)
@@ -53,7 +53,7 @@ function checkAll(checkBox)
 }
 
 /**
- * 
+ *
  * @param uri
  * @param name
  * @param ext
@@ -100,10 +100,10 @@ function loginForm()
     }
 }
 
- 
+
 /**
  * Displays or hides a configuration block
- * 
+ *
  * @param  string container
  * @return void
  */
@@ -317,7 +317,7 @@ function infoBox(infobox_id)
  *                        saveregistration, savevoting, sendcontact,
  *                        sendtofriends
  * @param string formName Name of the current form
- * 
+ *
  * @return void
  */
 function saveFormValues(action, formName)
@@ -347,7 +347,7 @@ function saveFormValues(action, formName)
             }
         }
     });
-    
+
     return false;
 }
 
@@ -467,7 +467,7 @@ function checkQuestion()
 
 /**
  * Refreshes a captcha image
- * 
+ *
  * @param string action
  */
 function refreshCaptcha(action)

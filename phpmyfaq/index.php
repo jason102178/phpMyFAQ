@@ -4,7 +4,7 @@
  * language, gets and sets all cookie, post and get informations and includes
  * the templates we need and set all internal variables to the template
  * variables. That's all.
- * 
+ *
  * PHP Version 5.2
  *
  * The contents of this file are subject to the Mozilla Public License
@@ -306,7 +306,7 @@ if (! is_null($solutionId)) {
         $keywords        = ',' . $faq->getRecordKeywords($id);
         $metaDescription = PMF_Utils::makeShorterText(strip_tags($faqData['content']), 12);
     }
-} 
+}
 
 //
 // Handle the Tagging ID
@@ -467,7 +467,7 @@ $main_template_vars = array(
                              $plr->getMsg('plmsgGuestOnline', $usersOnLine[0]) .
                              $plr->getMsg('plmsgRegisteredOnline',$usersOnLine[1]),
     'stickyRecordsHeader' => $PMF_LANG['stickyRecordsHeader'],
-    'copyright'           => 'powered by <a href="http://www.phpmyfaq.de" target="_blank">phpMyFAQ</a> ' . 
+    'copyright'           => 'powered by <a href="http://www.phpmyfaq.de" target="_blank">phpMyFAQ</a> ' .
                              $faqconfig->get('main.currentVersion'),
     'registerUser'        => '<a href="?action=register">' . $PMF_LANG['msgRegistration'] . '</a>',
     'sendPassword'        => '<a href="./admin/password.php">' . $PMF_LANG['lostPassword'] . '</a>',
@@ -508,7 +508,7 @@ if ('main' == $action || 'show' == $action) {
         );
     }
 }
-                             
+
 $stickyRecordsParams = $faq->getStickyRecords();
 if (!isset($stickyRecordsParams['error'])) {
     $tpl->processBlock('index', 'stickyRecordsList', array(
@@ -620,7 +620,7 @@ if ($faqconfig->get('records.orderingPopularFaqs') == 'visits') {
 } else {
     $param = 'voted';
 }
-    
+
 $toptenParams = $faq->getTopTen($param);
 if (!isset($toptenParams['error'])) {
     $tpl->processBlock('rightBox', 'toptenList', array(
@@ -657,7 +657,7 @@ if ('artikel' == $action || 'show' == $action || is_numeric($solutionId)) {
 
     $faqHelper = PMF_Helper_Faq::getInstance();
     $faqHelper->setSsl((isset($_SERVER['HTTPS']) && is_null($_SERVER['HTTPS']) ? false : true));
-    
+
     $tpl->processBlock(
         'rightBox', 'socialLinks', array(
             'writeDiggMsgTag'        => 'Digg it!',
