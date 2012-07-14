@@ -216,19 +216,32 @@ class PMF_Rating
     {
         if (defined('PMF_VOTING_MODE') && PMF_VOTING_MODE == 'advanced') {
             $votingTableName = 'faqvoting_adv';
+            $query = sprintf(
+                'SELECT
+                    sum(vote) as voting,
+                    count(vote) as usr
+                FROM
+                    %s%s
+                WHERE
+                    artikel = %d',
+                SQLPREFIX,
+                $votingTableName,
+                $id
+            );
         } else {
             $votingTableName = 'faqvoting';
+            $query = sprintf(
+                'SELECT
+                    (vote/usr) as voting, usr
+                FROM
+                    %s%s
+                WHERE
+                    artikel = %d',
+                SQLPREFIX,
+                $votingTableName,
+                $id
+            );
         }
-        $query = sprintf(
-            'SELECT
-                (vote/usr) as voting, usr
-            FROM
-                %s%s
-            WHERE
-                artikel = %d',
-            SQLPREFIX,
-            $votingTableName,
-            $id);
        $result = $this->db->query($query);
        if ($this->db->num_rows($result) > 0) {
             $row = $this->db->fetch_object($result);

@@ -559,19 +559,30 @@ switch ($action) {
         $recordId = PMF_Filter::filterInput(INPUT_POST, 'id', FILTER_VALIDATE_INT, 0);
         $vote     = PMF_Filter::filterInput(INPUT_POST, 'vote', FILTER_VALIDATE_INT);
         $userIp   = PMF_Filter::filterVar($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP);
+        $authorId = PMF_Filter::filterInput(INPUT_POST, 'authorid', FILTER_SANITIZE_STRING, '');
+        $authorEmail = PMF_Filter::filterInput(INPUT_POST, 'authoremail', FILTER_VALIDATE_EMAIL, '');
 
         if (isset($vote) && $faq->votingCheck($recordId, $userIp) && $faq->votingRulesCheck($vote)) {
             $faqsession->userTracking('save_voting', $recordId);
 
             $votingData = array(
-                'record_id' => $recordId,
-                'vote'      => $vote,
-                'user_ip'   => $userIp);
+                'record_id'   => $recordId,
+                'vote'        => $vote,
+                'user_ip'     => $userIp,
+                'user_id'     => 42,
+                'author_id'   => $authorId,
+                'author_email'=> $authorEmail,
+                'solution_id' => 0,
+            );
 
-            if (!$faq->getNumberOfVotings($recordId)) {
+            if (defined('PMF_VOTING_MODE') && PMF_VOTING_MODE == 'advanced') {
                 $faq->addVoting($votingData);
-            }  else {
-                $faq->updateVoting($votingData);
+            } else {
+                if (!$faq->getNumberOfVotings($recordId)) {
+                    $faq->addVoting($votingData);
+                }  else {
+                    $faq->updateVoting($votingData);
+                }
             }
             $faqRating   = new PMF_Rating();
             $message = array(

@@ -291,6 +291,8 @@ $tpl->processTemplate('writeContent', array(
     ),
     'saveVotingID'               => $faq->faqRecord['id'],
     'saveVotingIP'               => $_SERVER['REMOTE_ADDR'],
+    'saveVotingAuthorID'         => $faq->faqRecord['author'],
+    'saveVotingAuthorEmail'      => $faq->faqRecord['email'],
     'msgAverageVote'             => $PMF_LANG['msgAverageVote'],
     'printVotings'               => $faqRating->getVotingResult($recordId),
     'switchLanguage'             => $switchLanguage,

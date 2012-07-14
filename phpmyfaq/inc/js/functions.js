@@ -388,17 +388,18 @@ function autoSuggest()
 
 /**
  * Saves the voting by Ajax
- * 
+ *
  * @param type
  * @param id
  * @param value
  */
-function saveVoting(type, id, value)
+function saveVoting(type, id, value, aid, ae)
 {
+//data:     'type=' + type + '&id=' + id + '&vote=' + value + '&authorid=' + 'xauthorid' + '&authoremail' = 'xauthoremail',
     $.ajax({
         type:     'post',
         url:      'ajaxservice.php?action=savevoting',
-        data:     'type=' + type + '&id=' + id + '&vote=' + value,
+        data:     'type=' + type + '&id=' + id + '&vote=' + value + '&authorid=' + aid + '&authoremail=' + ae,
         dataType: 'json',
         cache:    false,
         success:  function(json) {

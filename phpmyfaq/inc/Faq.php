@@ -2134,23 +2134,58 @@ class PMF_Faq
         }
 
         if (defined('PMF_VOTING_MODE') && PMF_VOTING_MODE == 'advanced') {
+            /* START find out question author */
+            $query = sprintf(
+                "SELECT user_id
+                FROM %sfaquserdata
+                WHERE display_name = '%s'
+                AND email = '%s'",
+                SQLPREFIX,
+                $votingData['author_id'],
+                $votingData['author_email']
+            );
+            $id = 0;
+            if ($result = $this->db->query($query)) {
+                if ($row = $this->db->fetch_assoc($result)) {
+                    $id = $row['user_id'];
+                }
+            }
+            /* END find out question author */
+
             $votingTableName = 'faqvoting_adv';
+            $query = sprintf(
+                "INSERT INTO
+                    %s%s
+                VALUES
+                    (%d, %d, %d, %d, %d, '%s', %d, %d)",
+                SQLPREFIX,
+                $votingTableName,
+                $this->db->nextID(SQLPREFIX.$votingTableName, 'id'),
+                $votingData['record_id'],
+                $votingData['vote'],
+                '23',
+                $_SERVER['REQUEST_TIME'],
+                $votingData['user_ip'],
+                $id,
+                $votingData['solution_id']
+            );
         } else {
             $votingTableName = 'faqvoting';
+            $query = sprintf(
+                "INSERT INTO
+                    %s%s
+                VALUES
+                    (%d, %d, %d, 1, %d, '%s')",
+                SQLPREFIX,
+                $votingTableName,
+                $this->db->nextID(SQLPREFIX.$votingTableName, 'id'),
+                $votingData['record_id'],
+                $votingData['vote'],
+                $_SERVER['REQUEST_TIME'],
+                $votingData['user_ip']
+            );
         }
 
-        $query = sprintf(
-            "INSERT INTO
-                %s%s
-            VALUES
-                (%d, %d, %d, 1, %d, '%s')",
-            SQLPREFIX,
-            $votingTableName,
-            $this->db->nextID(SQLPREFIX.$votingTableName, 'id'),
-            $votingData['record_id'],
-            $votingData['vote'],
-            $_SERVER['REQUEST_TIME'],
-            $votingData['user_ip']);
         $this->db->query($query);
 
         return true;

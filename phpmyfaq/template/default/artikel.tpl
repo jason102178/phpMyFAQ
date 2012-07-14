@@ -55,6 +55,8 @@
                     <fieldset>
                         <legend>{msgVoteUseability}</legend>
                         <input type="hidden" name="artikel" value="{saveVotingID}" />
+                        <input type="hidden" id="authorid" name="authorid" value="{saveVotingAuthorID}" />
+                        <input type="hidden" id="authoremail" name="authoremail" value="{saveVotingAuthorEmail}" />
                         <div id="votings"></div>
                         <div id="votingstars">
                             <input class="voting" type="radio" name="vote" value="-10" />
@@ -139,7 +141,7 @@
             <script>
             $('.voting').rating({
                 callback: function(value, link){
-                    saveVoting('faq', {id}, value);
+                    saveVoting('faq', {id}, value, $('#authorid').val(), $('#authoremail').val());
                 }
             });
             $(function() {
