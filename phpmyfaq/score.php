@@ -8,7 +8,7 @@ $rating = new PMF_Rating();
 
 $all = $rating->getScoreboard();
 
-$table = '<table>';
+$table = '<table class="openquestions">';
 
 $table .= '<tr><th colspan="2">Name</th><th>Score</th></tr>'.PHP_EOL;
 
@@ -27,7 +27,7 @@ foreach ($all as $id => $data) {
     $table .= $row;
 }
 
-$table .= '</table';
+$table .= '</table>';
 
 
 $tpl->processTemplate(

@@ -66,6 +66,7 @@ $PMF_LANG["msgQuestion"] = "Add question";
 $PMF_LANG["msgOpenQuestions"] = "Open questions";
 $PMF_LANG["msgHelp"] = "Help";
 $PMF_LANG["msgContact"] = "Contact";
+$PMF_LANG["msgScore"] = "Score";
 $PMF_LANG["msgHome"] = "FAQ Home";
 $PMF_LANG["msgNews"] = "FAQ News";
 $PMF_LANG["msgUserOnline"] = " Users online";

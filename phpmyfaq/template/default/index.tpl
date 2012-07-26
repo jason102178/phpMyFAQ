@@ -70,6 +70,7 @@
         <li>{msgOpenQuestions}</li>
         <li>{showSitemap}</li>
         <li>{msgContact}</li>
+        <li>{msgScore}</li>
     </ul>
 </nav>
 

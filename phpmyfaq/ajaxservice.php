@@ -559,6 +559,7 @@ switch ($action) {
         $recordId = PMF_Filter::filterInput(INPUT_POST, 'id', FILTER_VALIDATE_INT, 0);
         $vote     = PMF_Filter::filterInput(INPUT_POST, 'vote', FILTER_VALIDATE_INT);
         $userIp   = PMF_Filter::filterVar($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP);
+        $user     = PMF_User_CurrentUser::getFromSession($faqconfig->get('security.ipCheck'));
         $authorId = PMF_Filter::filterInput(INPUT_POST, 'authorid', FILTER_SANITIZE_STRING, '');
         $authorEmail = PMF_Filter::filterInput(INPUT_POST, 'authoremail', FILTER_VALIDATE_EMAIL, '');
 
@@ -569,7 +570,7 @@ switch ($action) {
                 'record_id'   => $recordId,
                 'vote'        => $vote,
                 'user_ip'     => $userIp,
-                'user_id'     => 42,
+                'user_id'     => $user->getUserId(),
                 'author_id'   => $authorId,
                 'author_email'=> $authorEmail,
                 'solution_id' => 0,

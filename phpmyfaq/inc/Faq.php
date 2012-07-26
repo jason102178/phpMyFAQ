@@ -2163,7 +2163,7 @@ class PMF_Faq
                 $this->db->nextID(SQLPREFIX.$votingTableName, 'id'),
                 $votingData['record_id'],
                 $votingData['vote'],
-                '23',
+                $votingData['user_id'],
                 $_SERVER['REQUEST_TIME'],
                 $votingData['user_ip'],
                 $id,
