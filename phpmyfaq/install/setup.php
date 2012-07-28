@@ -52,7 +52,7 @@ if ((@ini_get('safe_mode') != 'On' || @ini_get('safe_mode') !== 1)) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <title>phpMyFAQ <?php print VERSION; ?> Setup</title>
+    <title>phpMyFAQ <?php print VERSION; ?> CMS Setup</title>
 
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
     <meta name="application-name" content="phpMyFAQ <?php print VERSION; ?>">
@@ -105,7 +105,7 @@ if ((@ini_get('safe_mode') != 'On' || @ini_get('safe_mode') !== 1)) {
 
 <header id="header">
     <h1>
-        <h1>phpMyFAQ <?php print VERSION; ?> Setup</h1>
+        <h1>phpMyFAQ <?php print VERSION; ?> CMS Setup</h1>
     </h1>
 </header>
 

@@ -17,7 +17,7 @@
  * @category  phpMyFAQ
  * @package   Setup
  * @author    Thorsten Rinne <thorsten@phpmyfaq.de>
- * @copyright 2006-2011 phpMyFAQ Team
+ * @copyright 2006-2012 phpMyFAQ Team
  * @license   http://www.mozilla.org/MPL/MPL-1.1.html Mozilla Public License Version 1.1
  * @link      http://www.phpmyfaq.de
  * @since     2006-07-02
@@ -39,7 +39,7 @@ $query[] = "INSERT INTO " . $sqltblpre . "faqconfig VALUES ('main.metaPublisher'
 $query[] = "INSERT INTO " . $sqltblpre . "faqconfig VALUES ('main.phpMyFAQToken', '')";
 $query[] = "INSERT INTO " . $sqltblpre . "faqconfig VALUES ('main.referenceURL', '')";
 $query[] = "INSERT INTO " . $sqltblpre . "faqconfig VALUES ('main.send2friendText', '')";
-$query[] = "INSERT INTO " . $sqltblpre . "faqconfig VALUES ('main.titleFAQ', 'phpMyFAQ Codename Prospero')";
+$query[] = "INSERT INTO " . $sqltblpre . "faqconfig VALUES ('main.titleFAQ', 'phpMyFAQ CMS Edition')";
 $query[] = "INSERT INTO " . $sqltblpre . "faqconfig VALUES ('main.urlValidateInterval', '86400')";
 $query[] = "INSERT INTO " . $sqltblpre . "faqconfig VALUES ('main.enableWysiwygEditor', 'true')";
 $query[] = "INSERT INTO " . $sqltblpre . "faqconfig VALUES ('main.templateSet', 'default')";
